@@ -1,0 +1,5 @@
+from collections import Counter
+
+arr = list(map(int, input("Enter numbers: ").split()))
+most_common = Counter(arr).most_common(1)[0]
+print(f"Most frequent number: {most_common[0]}, Occurrences: {most_common[1]}")
