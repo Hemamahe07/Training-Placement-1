@@ -1,0 +1,4 @@
+n = int(input("Enter the range (n): "))
+arr = list(map(int, input("Enter n-1 numbers: ").split()))
+missing_number = sum(range(1, n + 1)) - sum(arr)
+print("Missing number:", missing_number)
