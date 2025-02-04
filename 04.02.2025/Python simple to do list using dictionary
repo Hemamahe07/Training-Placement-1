@@ -1,0 +1,20 @@
+tasks = {}
+
+while True:
+    print("\n1. Add Task\n2. Remove Task\n3. View Tasks\n4. Exit")
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        task = input("Enter task description: ")
+        priority = input("Enter priority (high/medium/low): ")
+        tasks[task] = priority
+    elif choice == "2":
+        task = input("Enter task to remove: ")
+        tasks.pop(task, None)
+    elif choice == "3":
+        for task, priority in tasks.items():
+            print(f"{task} - {priority}")
+    elif choice == "4":
+        break
+    else:
+        print("Invalid choice, try again!")
