@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definition for a singly linked list node
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to find the length of a linked list
+int getLength(struct Node* head) {
+    int length = 0;
+    while (head) {
+        length++;
+        head = head->next;
+    }
+    return length;
+}
+
+// Function to find the intersection point of two linked lists
+struct Node* findIntersection(struct Node* head1, struct Node* head2) {
+    int len1 = getLength(head1);
+    int len2 = getLength(head2);
+
+    // Adjust starting points to make them aligned
+    while (len1 > len2) {
+        head1 = head1->next;
+        len1--;
+    }
+    while (len2 > len1) {
+        head2 = head2->next;
+        len2--;
+    }
+
+    // Traverse both lists together to find the intersection
+    while (head1 && head2) {
+        if (head1 == head2) {
+            return head1;  // Intersection found
+        }
+        head1 = head1->next;
+        head2 = head2->next;
+    }
+
+    return NULL;  // No intersection found
+}
+
+// Function to print a linked list
+void printList(struct Node* head) {
+    while (head) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    // Creating two linked lists with intersection
+
+    // List 1: 1 -> 2 -> 3 -> 6 -> 7 -> 8
+    struct Node* head1 = createNode(1);
+    head1->next = createNode(2);
+    head1->next->next = createNode(3);
+
+    // List 2: 4 -> 5 -> 6 -> 7 -> 8 (Intersection at node with value 6)
+    struct Node* head2 = createNode(4);
+    head2->next = createNode(5);
+
+    // Creating the intersection
+    struct Node* commonNode = createNode(6);
+    commonNode->next = createNode(7);
+    commonNode->next->next = createNode(8);
+
+    // Attach the intersection to both lists
+    head1->next->next->next = commonNode;
+    head2->next->next = commonNode;
+
+    printf("List 1: ");
+    printList(head1);
+    printf("List 2: ");
+    printList(head2);
+
+    // Find and print intersection point
+    struct Node* intersection = findIntersection(head1, head2);
+    if (intersection) {
+        printf("Intersection found at node with value: %d\n", intersection->data);
+    } else {
+        printf("No intersection found.\n");
+    }
+
+    return 0;
+}
