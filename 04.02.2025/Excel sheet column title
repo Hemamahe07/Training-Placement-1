@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+void columnNumberToTitle(int columnNumber) {
+    char columnTitle[10]; // Buffer to store the title (Excel titles are short)
+    int index = 0;
+
+    while (columnNumber > 0) {
+        int rem = (columnNumber - 1) % 26;
+        columnTitle[index++] = 'A' + rem;
+        columnNumber = (columnNumber - 1) / 26;
+    }
+
+    // Reverse the result since we calculated it backwards
+    for (int i = index - 1; i >= 0; i--) {
+        printf("%c", columnTitle[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int columnNumber;
+    printf("Enter column number: ");
+    scanf("%d", &columnNumber);
+
+    printf("Excel Column Title: ");
+    columnNumberToTitle(columnNumber);
+    
+    return 0;
+}
