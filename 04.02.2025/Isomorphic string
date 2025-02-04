@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_CHAR 256
+
+// Function to check if two strings are isomorphic
+int areIsomorphic(char str1[], char str2[]) {
+    int map1[MAX_CHAR] = {0};  // Mapping for str1 -> str2
+    int map2[MAX_CHAR] = {0};  // Reverse mapping for str2 -> str1
+
+    int len1 = strlen(str1);
+    int len2 = strlen(str2);
+
+    if (len1 != len2)
+        return 0;  // Strings of different lengths can't be isomorphic
+
+    for (int i = 0; i < len1; i++) {
+        char c1 = str1[i], c2 = str2[i];
+
+        // If already mapped, check if the mapping is consistent
+        if ((map1[c1] && map1[c1] != c2) || (map2[c2] && map2[c2] != c1))
+            return 0;
+
+        // Establish mapping
+        map1[c1] = c2;
+        map2[c2] = c1;
+    }
+
+    return 1;
+}
+
+int main() {
+    char str1[100], str2[100];
+
+    printf("Enter first string: ");
+    scanf("%s", str1);
+
+    printf("Enter second string: ");
+    scanf("%s", str2);
+
+    if (areIsomorphic(str1, str2))
+        printf("The strings are isomorphic.\n");
+    else
+        printf("The strings are not isomorphic.\n");
+
+    return 0;
+}
