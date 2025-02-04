@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure for a node in the linked list
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to detect a cycle in the linked list
+int detectCycle(struct Node* head) {
+    struct Node *slow = head, *fast = head;
+    
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;          // Move one step
+        fast = fast->next->next;    // Move two steps
+
+        if (slow == fast) {
+            return 1;  // Cycle detected
+        }
+    }
+    return 0;  // No cycle
+}
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to create a cycle in the linked list for testing
+void createCycle(struct Node* head, int position) {
+    struct Node* temp = head;
+    struct Node* cycleNode = NULL;
+    int count = 1;
+
+    while (temp->next != NULL) {
+        if (count == position) {
+            cycleNode = temp;
+        }
+        temp = temp->next;
+        count++;
+    }
+    temp->next = cycleNode;  // Creating the cycle
+}
+
+// Main function
+int main() {
+    struct Node* head = createNode(1);
+    head->next = createNode(2);
+    head->next->next = createNode(3);
+    head->next->next->next = createNode(4);
+    head->next->next->next->next = createNode(5);
+
+    createCycle(head, 2);  // Creating a cycle at position 2
+
+    if (detectCycle(head))
+        printf("Cycle detected in the linked list.\n");
+    else
+        printf("No cycle found in the linked list.\n");
+
+    return 0;
+}
